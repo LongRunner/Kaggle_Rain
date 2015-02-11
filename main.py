@@ -38,11 +38,12 @@ def parse_file(file_name):
 
 
 def save_file(name, object):
-    pickle.dump(object, open(name + ".p", "wb"))
+    np.save(name + '.npz', object['data'])
+    pickle.dump(object['labels'], open(name + ".p", "wb"))
 
 
 def load_file(name):
-    return pickle.load(open(name + ".p", "rb"))
+    return {'data': np.load(name+'.npz') ,'labels':pickle.load(open(name + ".p", "rb"))}
 
 if __name__ == '__main__':
     data_dict = parse_file('train_2013.csv')
