@@ -3,3 +3,5 @@ For agriculture, it is extremely important to know how much it rained on a parti
 Unlike a conventional Doppler radar, a polarimetric radar transmits radio wave pulses that have both horizontal and vertical orientations. Because rain drops become flatter as they increase in size and because ice crystals tend to be elongated vertically, whereas liquid droplets tend to be flattened, it is possible to infer the size of rain drops and the type of hydrometeor from the differential reflectivity of the two orientations.
 
 In this competition, you are given polarimetric radar values and derived quantities at a location over the period of one hour. You will need to produce a probabilistic distribution of the hourly rain gauge total. More details are on the data page.
+
+-i
