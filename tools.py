@@ -99,7 +99,7 @@ def parse_file(file_name):
 
 
 def save_file(name, obj):
-    np.savez_compressed('train_2013', obj['data'])
+    np.savez_compressed(name, obj['data'])
     pickle.dump(obj['labels'], open(name + ".p", "wb"))
 
 
