@@ -1,12 +1,12 @@
 setwd('/Users/isaiah/Dropbox/programming/kaggle/rain')
-rain.data = read.table("processed_train_2013.csv",header=T)
+rain.data = read.csv(file="processed_train_2013.csv",head=TRUE,sep=",")
 attach(rain.data)
 #labels
 	#Id,TimeToEnd,DistanceToRadar,Composite,HybridScan,HydrometeorType,Kdp,RR1,RR2,RR3,RadarQualityIndex,Reflectivity,ReflectivityQC,RhoHV,Velocity,Zdr,LogWaterVolume,MassWeightedMean,MassWeightedSD,Expected
 
 
 #full model
-fit=lm(Expected~TimeToEnd+DistanceToRadar+Composite+HybridScan+HydrometeorType+Kdp+RR1+RR2+RR3+RadarQualityIndex+Reflectivity+ReflectivityQC+RhoHV+Velocity+Zdr+LogWaterVolume+MassWeightedMean+MassWeightedSD)
+fit=lm(Expected~TimeToEnd+DistanceToRadar+Composite+HybridScan+HydrometeorType+Kdp+RR1+RR2+RR3+RadarQualityIndex+Reflectivity+ReflectivityQC+RhoHV+Velocity+Zdr+LogWaterVolume+MassWeightedMean+MassWeightedSD+error_1+error_2+error_3+error_4+error_5)
 summary(fit)
 #quantile(fit$residuals , prob=c(0.025, 0.5, 0.975))
 #BIC(fit)

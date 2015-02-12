@@ -1,5 +1,6 @@
 import numpy as np
 import pickle
+import time
 class pca_norm(object):
     def __init__(self, arr, k=1):
         self.k=k
@@ -49,15 +50,40 @@ def parse_file(file_name):
             col_data = file_lines[row].split(',')
             if len(col_data)>=2:
                 repeat = len(col_data[1].split(' '))
-                out_temp = [x[:] for x in [[None] * 20] * (repeat)]
+                out_temp = [x[:] for x in [[None] * 25] * (repeat)]
                 id_n = float(col_data[0])
                 exp_rain = float(col_data[len(col_data) - 1])
-                for col in range(len(col_data)):
+                for col in range(len(col_data) + 5):
                     for i in range(repeat):
                         if col == 0:
                             out_temp[i][col] = id_n
-                        elif col == (len(col_data) - 1):
+                        elif col == (len(col_data) + 5 - 1):
                             out_temp[i][col] = exp_rain
+                        elif col == (len(col_data) + 5- 2):
+                            if '-99000' in file_lines[row]:
+                                out_temp[i][col] = 1.0
+                            else:
+                                out_temp[i][col] = 0.0
+                        elif col == (len(col_data)+ 5 - 3):
+                            if '-99001' in file_lines[row]:
+                                out_temp[i][col] = 1.0
+                            else:
+                                out_temp[i][col] = 0.0
+                        elif col == (len(col_data)+ 5 - 4):
+                            if '-99003' in file_lines[row]:
+                                out_temp[i][col] = 1.0
+                            else:
+                                out_temp[i][col] = 0.0
+                        elif col == (len(col_data)+ 5 - 5):
+                            if 'nan' in file_lines[row]:
+                                out_temp[i][col] = 1.0
+                            else:
+                                out_temp[i][col] = 0.0
+                        elif col == (len(col_data) + 5 - 6):
+                            if '999.0' in file_lines[row]:
+                                out_temp[i][col] = 1.0
+                            else:
+                                out_temp[i][col] = 0.0
                         else:
                             out_temp[i][col] = col_data[col].split(' ')[i]
                 out += out_temp
@@ -65,7 +91,11 @@ def parse_file(file_name):
                 continue
         else:
             labels = file_lines[row].split(',')
-    return {'data': np.array(out).astype(float), 'labels': labels}
+            for i in range(5):
+                labels.insert(len(labels)-1,'error_'+str(i+1))
+            labels = ",".join(labels)
+            print(labels)
+    return {'data': np.nan_to_num(np.array(out).astype(float)), 'labels': labels}
 
 
 def save_file(name, obj):
